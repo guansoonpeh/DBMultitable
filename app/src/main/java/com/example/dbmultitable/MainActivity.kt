@@ -46,17 +46,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnInsert.setOnClickListener() {
 
-            var found:Boolean = false
+            if(  model.studentList.value?.find { s-> s.id == "W001" } == null){
 
-            model.studentList.value?.forEach { studentEntity ->
-                if (studentEntity.id == "W001")   {
-                    found = true
-                }
-            }
-
-            if(!found){
-                val student = StudentEntity("W001", "test", "RIT")
+               val student = StudentEntity("W001", "test", "RIT")
                 model.addStudent(student)
+
             }else{
                 Toast.makeText(applicationContext, "Student ID already existed", Toast.LENGTH_SHORT).show()
             }
