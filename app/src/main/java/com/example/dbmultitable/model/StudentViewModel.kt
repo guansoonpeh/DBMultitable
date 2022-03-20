@@ -1,11 +1,16 @@
 package com.example.dbmultitable.model
 
 import android.app.Application
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.*
+import com.example.dbmultitable.entity.ProgrammeEntity
 import com.example.dbmultitable.entity.StudentEntity
+import com.example.dbmultitable.repository.ProgrammeRespository
 import com.example.dbmultitable.repository.StudentRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
+import java.util.concurrent.Callable
 
 class StudentViewModel(application: Application) : ViewModel(){
 
@@ -20,6 +25,12 @@ class StudentViewModel(application: Application) : ViewModel(){
         viewModelScope.launch{
             studentList = repository.getAll()
         }
+
+//        //for demo only
+//        val rep= ProgrammeRespository(application)
+//        viewModelScope.launch {
+//            rep.add(ProgrammeEntity("RIT", "Bachelor in IT"))
+//        }
     }
 
 
@@ -31,9 +42,10 @@ class StudentViewModel(application: Application) : ViewModel(){
 
 
     fun addStudent(student:StudentEntity) {
-        viewModelScope.launch {
+
+       viewModelScope.launch {
             repository.add(student)
-        }
+       }
     }
 
     fun deleteAll() {
@@ -41,6 +53,5 @@ class StudentViewModel(application: Application) : ViewModel(){
             repository.deleteAll()
         }
     }
-
 
 }

@@ -16,9 +16,8 @@ class StudentRepository(application: Application) {
         return studentDao.getAll()
     }
 
-    suspend fun add(student: StudentEntity){
-        studentDao.insert(student)
-
+    suspend fun add(student: StudentEntity) {
+      studentDao.insert(student)
     }
 
     suspend fun deleteAll(){

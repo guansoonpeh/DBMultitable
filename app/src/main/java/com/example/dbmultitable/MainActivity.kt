@@ -2,12 +2,14 @@ package com.example.dbmultitable
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.dbmultitable.database.TARUCDatabase
 import com.example.dbmultitable.databinding.ActivityMainBinding
 import com.example.dbmultitable.entity.ProgrammeEntity
 import com.example.dbmultitable.entity.StudentEntity
 import com.example.dbmultitable.model.StudentViewModel
+import com.example.dbmultitable.repository.ProgrammeRespository
 import com.example.dbmultitable.repository.StudentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,10 +25,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val programmeDao = TARUCDatabase.getInstance(applicationContext).programmeDao
-//        val studentDao = TARUCDatabase.getInstance(applicationContext).studentDao
 
-          val model = StudentViewModel(application)
+        val model = StudentViewModel(application)
 
         model.studentList.observe(this, Observer { list->
             // update view
@@ -46,8 +46,20 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnInsert.setOnClickListener() {
 
-            val student = StudentEntity("W334", "test", "RIT")
-            model.addStudent(student)
+            var found:Boolean = false
+
+            model.studentList.value?.forEach { studentEntity ->
+                if (studentEntity.id == "W001")   {
+                    found = true
+                }
+            }
+
+            if(!found){
+                val student = StudentEntity("W001", "test", "RIT")
+                model.addStudent(student)
+            }else{
+                Toast.makeText(applicationContext, "Student ID already existed", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
