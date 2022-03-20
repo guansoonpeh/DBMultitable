@@ -1,5 +1,7 @@
 package com.example.dbmultitable.dao
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -10,8 +12,12 @@ import com.example.dbmultitable.entity.StudentEntity
 interface StudentDao {
 
     @Insert
-    fun insert(s: StudentEntity)
+    suspend fun insert(student: StudentEntity)
+
+    @Query("Delete from student_table")
+    suspend fun deleteAll()
 
     @Query("Select * from student_table")
-    fun getAll (): List<StudentEntity>
+    fun getAll (): LiveData<List<StudentEntity>>
+
 }

@@ -7,8 +7,8 @@ import com.example.dbmultitable.entity.ProgrammeEntity
 interface ProgrammeDao {
 
     @Insert
-    fun insert(pro:ProgrammeEntity)
+    suspend fun insert(pro:ProgrammeEntity)
 
     @Query("Select * from programme_table")
-    fun getAll (): List<ProgrammeEntity>
+    suspend fun getAll (): List<ProgrammeEntity>
 }
